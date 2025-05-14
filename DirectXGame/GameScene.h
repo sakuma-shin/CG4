@@ -1,2 +1,19 @@
 #pragma once
-class GameScene {};
+#include "KamataEngine.h"
+#include "Particle.h"
+
+
+using namespace KamataEngine;
+class GameScene {
+public:
+	~GameScene();
+
+	void Initialize();
+	void Update();
+	void Draw();
+
+private:
+	Model* modelParticle_ = nullptr;
+	Camera camera_;
+	Particle* particle_ = nullptr;
+};
