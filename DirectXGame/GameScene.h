@@ -15,5 +15,5 @@ public:
 private:
 	Model* modelParticle_ = nullptr;
 	Camera camera_;
-	Particle* particle_ = nullptr;
+	std::list<Particle*> particles_;
 };
