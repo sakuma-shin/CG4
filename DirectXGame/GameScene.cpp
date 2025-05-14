@@ -1,5 +1,6 @@
 #include "GameScene.h"
-#include<random>
+#include <random>
+
 
 using namespace MathUtility;
 
@@ -27,24 +28,33 @@ void GameScene::Initialize() {
 		// 位置
 		Vector3 position = {0.0f, 0.0f, 0.0f};
 
-		//移動量
+		// 移動量
 		Vector3 velocity = {distribution(randomEngine), distribution(randomEngine), 0};
 
 		Normalize(velocity);
 		velocity *= distribution(randomEngine);
 		velocity *= 0.1f;
 
-		//初期化
-		particle->Initialize(modelParticle_, position,velocity);
+		// 初期化
+		particle->Initialize(modelParticle_, position, velocity);
 		// リストに追加
 		particles_.push_back(particle);
 	}
 }
 
 void GameScene::Update() {
+	particles_.remove_if([](Particle* particle) {
+		if (particle->IsFinished()) {
+			delete particle;
+			return true;
+		}
+		return false;
+	});
+
 	for (Particle* particle : particles_) {
 		particle->Update();
 	}
+
 }
 
 void GameScene::Draw() {
