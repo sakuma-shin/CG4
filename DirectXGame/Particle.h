@@ -4,7 +4,7 @@ using namespace KamataEngine;
 
 class Particle {
 public:
-	void Initialize(Model* model,Vector3 position);
+	void Initialize(Model* model,Vector3 position,Vector3 velocity);
 	void Update();
 	void Draw(Camera& camera);
 
@@ -17,4 +17,7 @@ private:
 	ObjectColor objectColor_;
 	// 色の数値
 	Vector4 color_;
+
+	//移動量
+	Vector3 velocity_;
 };

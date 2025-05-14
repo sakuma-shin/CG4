@@ -3,14 +3,19 @@
 
 using namespace MathUtility;
 
-void Particle::Initialize(Model* model, Vector3 position) {
+void Particle::Initialize(Model* model, Vector3 position, Vector3 velocity) {
 	assert(model);
 
 	model_ = model;
 
+	velocity_ = velocity;
+
 	worldTransform_.Initialize();
 
 	worldTransform_.translation_ = position;
+
+	//大きさ
+	worldTransform_.scale_ = {0.2f, 0.2f, 0.2f};
 
 	//色の設定
 	objectColor_.Initialize();
@@ -19,7 +24,7 @@ void Particle::Initialize(Model* model, Vector3 position) {
 
 void Particle::Update() { 
 	//移動
-	worldTransform_.translation_ += {0.0f, 0.1f, 0.0f};
+	worldTransform_.translation_ += velocity_;
 
 	//行列を更新
 	worldTransform_.UpdateMatrix();
