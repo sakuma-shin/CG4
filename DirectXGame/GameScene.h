@@ -12,6 +12,8 @@ public:
 	void Update();
 	void Draw();
 
+	void ParticleBorn(Vector3 position);
+
 private:
 	Model* modelParticle_ = nullptr;
 	Camera camera_;
