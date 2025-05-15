@@ -12,7 +12,9 @@ std::uniform_real_distribution<float> distribution(-1.0f, 1.0f);
 
 GameScene::~GameScene() {
 	delete modelEffect_;
-	delete effect_;
+	for (Effect* effect : effects_) {
+		delete effect;
+	}
 }
 
 void GameScene::Initialize() {
@@ -21,21 +23,29 @@ void GameScene::Initialize() {
 	// 乱数の初期化
 	srand((unsigned)time(NULL));
 
-	
-	Vector3 scale = {1.0f, abs(distribution(randomEngine)), 1.0f};
-	float pi = 3.14f;
-	Vector3 rotation = {0.0f, 0.0f, pi * distribution(randomEngine)};
+	for (int i = 0; i < 15; i++) {
+		Vector3 scale = {0.05f, abs(distribution(randomEngine))*1.75f, 1.0f};
+		float pi = 3.14f;
+		Vector3 rotation = {0.0f, 0.0f, distribution(randomEngine)*pi};
 
-	effect_ = new Effect();
-	effect_->Initialize(modelEffect_,scale,rotation);
+		Effect* newEffect_ = new Effect();
+		newEffect_->Initialize(modelEffect_, scale, rotation);
+		effects_.push_back(newEffect_);
+	}
 }
 
-void GameScene::Update() { effect_->Update(); }
+void GameScene::Update() {
+	for (Effect* effect : effects_) {
+		effect->Update();
+	}
+}
 
 void GameScene::Draw() {
 	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
 
 	Model::PreDraw(dxCommon->GetCommandList());
-	effect_->Draw(camera_);
+	for (Effect* effect : effects_) {
+		effect->Draw(camera_);
+	}
 	Model::PostDraw();
 }
