@@ -57,13 +57,14 @@ void GameScene::Draw() {
 }
 
 void GameScene::EffectBorn(KamataEngine::Vector3 position) {
+	Vector4 color = {abs(distribution(randomEngine)), abs(distribution(randomEngine)), abs(distribution(randomEngine)), 1.0f};
 	for (int i = 0; i < 15; i++) {
-		Vector3 scale = {0.05f, abs(distribution(randomEngine)) * 5.0f, 0.1f};
+		Vector3 scale = {0.05f, abs(distribution(randomEngine)) * 8.0f, 0.1f};
 		float pi = 3.14f;
 		Vector3 rotation = {0.0f, 0.0f, distribution(randomEngine) * pi};
 
 		Effect* newEffect_ = new Effect();
-		newEffect_->Initialize(modelEffect_, scale, rotation,position);
+		newEffect_->Initialize(modelEffect_, scale, rotation,position,color);
 		effects_.push_back(newEffect_);
 	}
 }
