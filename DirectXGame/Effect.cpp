@@ -1,14 +1,13 @@
 #include "Effect.h"
 
-void Effect::Initialize(KamataEngine::Model* model) {
+void Effect::Initialize(KamataEngine::Model* model,KamataEngine::Vector3 scale, KamataEngine::Vector3 rotation) {
 	assert(model);
 
 	model_ = model;
 
 	worldTransform_.Initialize();
-
-	float pi = 3.14f;
-	worldTransform_.rotation_ = { 0.0f, 0.0f,pi / 4.0f};
+	worldTransform_.scale_ = scale;
+	worldTransform_.rotation_ = rotation;
 }
 
 void Effect::Update() { worldTransform_.UpdateMatrix(); }
