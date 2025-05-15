@@ -24,7 +24,7 @@ void GameScene::Initialize() {
 	srand((unsigned)time(NULL));
 
 	for (int i = 0; i < 15; i++) {
-		Vector3 scale = {0.05f, abs(distribution(randomEngine))*1.75f, 1.0f};
+		Vector3 scale = {0.05f, abs(distribution(randomEngine))*5.0f, 1.0f};
 		float pi = 3.14f;
 		Vector3 rotation = {0.0f, 0.0f, distribution(randomEngine)*pi};
 
@@ -35,6 +35,15 @@ void GameScene::Initialize() {
 }
 
 void GameScene::Update() {
+
+	effects_.remove_if([](Effect* effect) {
+		if (effect->IsFinished()) {
+			delete effect;
+			return true;
+		}
+		return false;
+	});
+
 	for (Effect* effect : effects_) {
 		effect->Update();
 	}
