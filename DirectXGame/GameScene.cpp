@@ -1,6 +1,8 @@
 #include "GameScene.h"
 #include <random>
 
+
+using namespace KamataEngine;
 using namespace MathUtility;
 
 std::random_device seedGenerator;
