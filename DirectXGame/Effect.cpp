@@ -2,7 +2,7 @@
 #include<cassert>
 #include<algorithm>
 
-void Effect::Initialize(KamataEngine::Model* model,KamataEngine::Vector3 scale, KamataEngine::Vector3 rotation) {
+void Effect::Initialize(KamataEngine::Model* model, KamataEngine::Vector3 scale, KamataEngine::Vector3 rotation, KamataEngine::Vector3 position) {
 	assert(model);
 
 	model_ = model;
@@ -10,6 +10,7 @@ void Effect::Initialize(KamataEngine::Model* model,KamataEngine::Vector3 scale, 
 	worldTransform_.Initialize();
 	worldTransform_.scale_ = scale;
 	worldTransform_.rotation_ = rotation;
+	worldTransform_.translation_ = position;
 
 	// 色の設定
 	objectColor_.Initialize();

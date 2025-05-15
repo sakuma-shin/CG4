@@ -10,6 +10,8 @@ public:
 	void Update();
 	void Draw();
 
+	void EffectBorn(KamataEngine::Vector3 position);
+
 private:
 	KamataEngine::Model* modelEffect_ = nullptr;
 	KamataEngine::Camera camera_;
