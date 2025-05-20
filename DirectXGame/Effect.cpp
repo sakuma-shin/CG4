@@ -39,7 +39,7 @@ void Effect::Update() {
 		worldTransform_.scale_.z -= reduction.z;
 
 		//Z軸で回転させる
-		worldTransform_.rotation_.z += 0.3f;
+		worldTransform_.rotation_.z -= 0.3f;
 
 		/*if (worldTransform_.scale_.x <= 0.0f) {
 		    worldTransform_.scale_.x = 0.0f;

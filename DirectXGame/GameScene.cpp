@@ -35,7 +35,7 @@ void GameScene::Update() {
 	});
 
 	// 確率で発生
-	if (rand() % 20 == 0) {
+	if (rand() % 10 == 0) {
 		// 位置
 		Vector3 position = {distribution(randomEngine) * 30.0f, distribution(randomEngine) * 20.0f, 0};
 		EffectBorn(position);
