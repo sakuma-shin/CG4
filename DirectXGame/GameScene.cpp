@@ -20,6 +20,7 @@ GameScene::~GameScene() {
 		delete particle;
 	}
 	particles_.clear();
+	delete fireworks_;
 }
 
 void GameScene::Initialize() {
@@ -67,10 +68,14 @@ void GameScene::ParticleUpdate() {
 	});
 
 	// 確率で発生
-	if (rand() % 20 == 0) {
-		// 位置
-		Vector3 position = {distribution(randomEngine) * 30.0f, distribution(randomEngine) * 20.0f, 0};
-		ParticleBorn(position);
+	if (fireworks_ != nullptr) {
+		if (fireworks_->isFinished()) {
+			// 位置
+			Vector3 position = fireworks_->GetPos();
+			ParticleBorn(position);
+			fireworks_ = nullptr;
+			delete fireworks_;
+		}
 	}
 
 	for (Particle* particle : particles_) {
@@ -89,8 +94,16 @@ void GameScene::Update() {
 
 	case PARTICLE:
 
+		if (input_->TriggerKey(DIK_RETURN)) {
+			FireWorksBorn();
+		}
+
 		if (input_->TriggerKey(DIK_SPACE)) {
-			scene_ =EFFECT;
+			scene_ = EFFECT;
+		}
+
+		if (fireworks_) {
+			fireworks_->Update();
 		}
 
 		ParticleUpdate();
@@ -123,6 +136,12 @@ void GameScene::ParticleDraw() {
 	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
 
 	Model::PreDraw(dxCommon->GetCommandList());
+	if (fireworks_ != nullptr) {
+		if (!fireworks_->isFinished()) {
+			fireworks_->Draw(camera_);
+		}
+	}
+
 	for (Particle* particle : particles_) {
 		particle->Draw(camera_);
 	}
@@ -169,15 +188,21 @@ void GameScene::ParticleBorn(KamataEngine::Vector3 position) {
 		Particle* particle = new Particle();
 
 		// 移動量
-		Vector3 velocity = {distribution(randomEngine), distribution(randomEngine), 0};
+		Vector3 velocity = {distribution(randomEngine), distribution(randomEngine), distribution(randomEngine)};
 
 		Normalize(velocity);
 		velocity *= distribution(randomEngine);
-		velocity *= 0.1f;
+		velocity *= 0.3f;
 
 		// 初期化
 		particle->Initialize(modelParticle_, position, velocity);
 		// リストに追加
 		particles_.push_back(particle);
 	}
+}
+
+void GameScene::FireWorksBorn() {
+	delete fireworks_;
+	fireworks_ = new FireWorks();
+	fireworks_->Initialize(modelParticle_);
 }

@@ -2,6 +2,7 @@
 #include "KamataEngine.h"
 #include "Effect.h"
 #include "Particle.h"
+#include"FireWorks.h"
 
 class GameScene {
 public:
@@ -19,6 +20,7 @@ public:
 
 	void EffectBorn(KamataEngine::Vector3 position);
 	void ParticleBorn(KamataEngine::Vector3 position);
+	void FireWorksBorn();
 
 private:
 	KamataEngine::Model* modelEffect_ = nullptr;
@@ -43,5 +45,6 @@ private:
 	// キー入力
 	KamataEngine::Input* input_ = nullptr;
 
+	FireWorks* fireworks_ = nullptr;
 
 };
