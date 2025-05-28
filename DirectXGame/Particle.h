@@ -1,29 +1,36 @@
 #pragma once
 #include "KamataEngine.h"
 
-class Effect {
+class Particle {
 public:
-	void Initialize(KamataEngine::Model* model, KamataEngine::Vector3 scale, KamataEngine::Vector3 rotation, KamataEngine::Vector3 position, KamataEngine::Vector4 color);
+	void Initialize(KamataEngine::Model* model, KamataEngine::Vector3 position, KamataEngine::Vector3 velocity);
 	void Update();
 	void Draw(KamataEngine::Camera& camera);
 
-	bool IsFinished() const { return isFinished_; }
+	bool IsFinished() { return isFinished_; }
 
 private:
-	KamataEngine::Model* model_ = nullptr;
 	KamataEngine::WorldTransform worldTransform_;
+
+	KamataEngine::Model* model_ = nullptr;
 
 	// 色変更オブジェクト
 	KamataEngine::ObjectColor objectColor_;
 	// 色の数値
 	KamataEngine::Vector4 color_;
 
+	// 移動量
+	KamataEngine::Vector3 velocity_;
+
 	// 終了フラグ
 	bool isFinished_ = false;
 	// 経過時間カウント
 	float counter_ = 0.0f;
 	// 存続時間(消滅までの時間)<秒>
-	const float kDuration = 1.0f;
+	const float kDuration = 3.0f;
 
-	const KamataEngine::Vector3 kMaxScale={0.1f, 15.0f, 0.2f};
+	//落ち始めるまでの時間
+	const float kDropTime = 2.0f;
+
+
 };
