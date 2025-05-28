@@ -27,7 +27,7 @@ private:
 	// 経過時間カウント
 	float counter_ = 0.0f;
 	// 存続時間(消滅までの時間)<秒>
-	const float kDuration = 3.0f;
+	const float kDuration = 4.0f;
 
 	//落ち始めるまでの時間
 	const float kDropTime = 2.0f;

@@ -25,5 +25,5 @@ private:
 	// 存続時間(消滅までの時間)<秒>
 	const float kDuration = 1.0f;
 
-	const KamataEngine::Vector3 kMaxScale={0.1f, 15.0f, 0.2f};
+	const KamataEngine::Vector3 kMaxScale={0.1f, 15.0f,1.0f};
 };
