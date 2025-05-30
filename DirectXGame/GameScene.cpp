@@ -169,8 +169,7 @@ void GameScene::Draw() {
 }
 
 void GameScene::EffectBorn(KamataEngine::Vector3 position) {
-	/*Vector4 color = {abs(distribution(randomEngine)), abs(distribution(randomEngine)), abs(distribution(randomEngine)), 1.0f};*/
-	Vector4 color = {1.0f, 1.0f, 1.0f, 1.0f};
+	Vector4 color = {abs(distribution(randomEngine)), abs(distribution(randomEngine)), abs(distribution(randomEngine)), 1.0f};
 	for (int i = 0; i < 50; i++) {
 		Vector3 scale = {abs(distribution(randomEngine)), abs(distribution(randomEngine)), abs(distribution(randomEngine))};
 		float pi = 3.14f;
