@@ -49,7 +49,7 @@ void GameScene::EffectUpdate() {
 	// 確率で発生
 	if (rand() % 30 == 0) {
 		// 位置
-		Vector3 position = {distribution(randomEngine) * 30.0f, distribution(randomEngine) * 20.0f, 0};
+		Vector3 position = {distribution(randomEngine) * 30.0f, distribution(randomEngine) * 20.0f, distribution(randomEngine) * 3.0f};
 		EffectBorn(position);
 	}
 
@@ -183,16 +183,16 @@ void GameScene::EffectBorn(KamataEngine::Vector3 position) {
 }
 
 void GameScene::ParticleBorn(KamataEngine::Vector3 position) {
-	for (int i = 0; i < 50; i++) {
+	for (int i = 0; i < 150; i++) {
 
 		Particle* particle = new Particle();
 
 		// 移動量
-		Vector3 velocity = {distribution(randomEngine), distribution(randomEngine), distribution(randomEngine)};
+		Vector3 velocity = {distribution(randomEngine), distribution(randomEngine), abs(distribution(randomEngine))*5.0f};
 
 		Normalize(velocity);
-		velocity *= distribution(randomEngine);
-		velocity *= 0.3f;
+		velocity *= abs(distribution(randomEngine));
+		velocity *= -0.5f;
 
 		// 初期化
 		particle->Initialize(modelParticle_, position, velocity);
