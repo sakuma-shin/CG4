@@ -33,7 +33,7 @@ void GameScene::Initialize() {
 	// 乱数の初期化
 	srand((unsigned)time(NULL));
 
-	scene_ = NONE;
+	scene_ = PARTICLE;
 }
 
 void GameScene::EffectUpdate() {
