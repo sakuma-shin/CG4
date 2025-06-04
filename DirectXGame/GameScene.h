@@ -11,8 +11,8 @@ public:
 	void Draw();
 
 private:
-	KamataEngine::Model* modelEffect_ = nullptr;
 	KamataEngine::Camera camera_;
+	KamataEngine::WorldTransform worldTransform_;
 
 	KamataEngine::Model2* model_ = nullptr;
 };
