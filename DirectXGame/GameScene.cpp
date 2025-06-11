@@ -15,10 +15,11 @@ void GameScene::Initialize() {
 	camera_.Initialize();
 
 	model_ = new Model2();
-	model_=Model2::Create();
+	model_=Model2::CreateSquare();
 }
 
-void GameScene::Update() {}
+void GameScene::Update() {
+}
 
 void GameScene::Draw() { 
 	DirectXCommon* dxCommon = DirectXCommon::GetInstance();

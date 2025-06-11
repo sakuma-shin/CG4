@@ -1,19 +1,19 @@
-//#include <3d\Model.h>
+// #include <3d\Model.h>
+#include "Model2.h"
 #include <3d\Camera.h>
-#include <base\DirectXCommon.h>
 #include <3d\Material.h>
-#include <math\MathUtility.h>
-#include <base\StringUtility.h>
-#include <base\TextureManager.h>
 #include <3d\WorldTransform.h>
 #include <algorithm>
+#include <base\DirectXCommon.h>
+#include <base\StringUtility.h>
+#include <base\TextureManager.h>
 #include <cassert>
 #include <d3dcompiler.h>
 #include <format>
 #include <fstream>
+#include <math\MathUtility.h>
 #include <numbers>
 #include <sstream>
-#include "Model2.h"
 
 #pragma comment(lib, "d3dcompiler.lib")
 
@@ -132,49 +132,51 @@ Model2* Model2::CreateSphere(uint32_t divisionVertial, uint32_t divisionHorizont
 }
 
 Model2* Model2::CreateSquare() {
-	//メモリ確保
+	// メモリ確保
 	Model2* instance = new Model2;
 	std::vector<Mesh::VertexPosNormalUv> vertices;
 	std::vector<uint32_t> indices;
 
-	//頂点数
+	// 頂点数
 	const uint32_t kNumVertices = 4;
 	const uint32_t kNumIndices = 6;
 
 	vertices.resize(kNumVertices);
 	indices.resize(kNumIndices);
 
-	//左下
-	vertices[0].pos = {0.0f,360.0f,0.0f};
-	vertices[0].uv = {1.0f,1.0f};
-	vertices[0].normal = {0.0f,0.0f,-1.0f};
+	const float kSideLength = 5.0f;
+
+	// 左下
+	vertices[0].pos = {-kSideLength, kSideLength, 0.0f};
+	vertices[0].uv = {0.0f, 1.0f};
+	vertices[0].normal = {0.0f, 0.0f, 1.0f};
 
 	// 左上
-	vertices[1].pos = {0.0f,0.0f,0.0f};
-	vertices[1].uv = {1.0f, 1.0f};
-	vertices[1].normal = {0.0f, 0.0f, -1.0f};
+	vertices[1].pos = {-kSideLength, -kSideLength, 0.0f};
+	vertices[1].uv = {0.0f, 0.0f};
+	vertices[1].normal = {0.0f, 0.0f, 1.0f};
 
 	// 右下
-	vertices[2].pos = {640.0f,360.0f,0.0f};
+	vertices[2].pos = {kSideLength, kSideLength, 0.0f};
 	vertices[2].uv = {1.0f, 1.0f};
-	vertices[2].normal = {0.0f, 0.0f, -1.0f};
+	vertices[2].normal = {0.0f, 0.0f, 1.0f};
 
 	// 右上
-	vertices[3].pos = {640.0f,0.0f,0.0f};
-	vertices[3].uv = {1.0f, 1.0f};
-	vertices[3].normal = {0.0f, 0.0f, -1.0f};
+	vertices[3].pos = {kSideLength, -kSideLength, 0.0f};
+	vertices[3].uv = {1.0f, 0.0f};
+	vertices[3].normal = {0.0f, 0.0f, 1.0f};
 
-	//インデックス
+	// インデックス
 	indices[0] = 0;
-	indices[1] = 1;
-	indices[2] = 2;
-	indices[3] = 1;
+	indices[1] = 2;
+	indices[2] = 1;
+	indices[3] = 2;
 	indices[4] = 3;
-	indices[5] = 2;
+	indices[5] = 1;
 
 	instance->InitializeFromVertices(vertices, indices);
 
-	return instance; 
+	return instance;
 }
 
 void Model2::PreDraw(ID3D12GraphicsCommandList* commandList) { ModelCommon2::GetInstance()->PreDraw(commandList); }
@@ -794,22 +796,19 @@ void ModelCommon2::InitializeGraphicsPipeline() {
 	blenddesc.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;
 
 	// 加算合成
-	//blenddesc.BlendOp = D3D12_BLEND_OP_ADD;
-	//blenddesc.SrcBlend = D3D12_BLEND_SRC_ALPHA;
-	//blenddesc.DestBlend = D3D12_BLEND_ONE;
+	// blenddesc.BlendOp = D3D12_BLEND_OP_ADD;
+	// blenddesc.SrcBlend = D3D12_BLEND_SRC_ALPHA;
+	// blenddesc.DestBlend = D3D12_BLEND_ONE;
 
-	//減算合成
-	//blenddesc.BlendOp = D3D12_BLEND_OP_REV_SUBTRACT;
-	//blenddesc.SrcBlend = D3D12_BLEND_SRC_ALPHA;
-	//blenddesc.DestBlend = D3D12_BLEND_ONE
+	// 減算合成
+	// blenddesc.BlendOp = D3D12_BLEND_OP_REV_SUBTRACT;
+	// blenddesc.SrcBlend = D3D12_BLEND_SRC_ALPHA;
+	// blenddesc.DestBlend = D3D12_BLEND_ONE
 
 	// 共通設定
 	blenddesc.BlendOpAlpha = D3D12_BLEND_OP_ADD;
 	blenddesc.SrcBlendAlpha = D3D12_BLEND_ONE;
 	blenddesc.DestBlendAlpha = D3D12_BLEND_ZERO;
-
-
-
 
 	// ブレンドステートの設定
 	gpipeline.BlendState.RenderTarget[0] = blenddesc;
