@@ -15,7 +15,7 @@ void GameScene::Initialize() {
 	camera_.Initialize();
 
 	model_ = new Model2();
-	model_=Model2::CreateSquare(7);
+	model_=Model2::CreateRing(32);
 }
 
 void GameScene::Update() {

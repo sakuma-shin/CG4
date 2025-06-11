@@ -177,7 +177,66 @@ Model2* Model2::CreateSquare(uint32_t num) {
 	return instance;
 }
 
+Model2* Model2::CreateRing(uint32_t divisionNum) {
+	// リングの分割数
+	const uint32_t kRingDivide = divisionNum;
+	// 外の半径
+	const float kOuterRadius = 5.0f;
+	// 内の半径
+	const float kInnerRadius = 1.5f;
 
+	const float radianPerDivide = 2.0f * std::numbers::pi_v<float> / float(kRingDivide);
+
+	Model2* instance = new Model2;
+	std::vector<Mesh::VertexPosNormalUv> vertices;
+	std::vector<uint32_t> indices;
+
+	const uint32_t kNumVertices = 4 * kRingDivide;
+	const uint32_t kNumIndices = 6 * kRingDivide;
+
+	vertices.resize(kNumVertices);
+	indices.resize(kNumIndices);
+
+	for (uint32_t index = 0; index < kRingDivide; ++index) {
+		float sin = std::sin(index * radianPerDivide);
+		float cos = std::cos(index * radianPerDivide);
+
+		float sinNext = std::sin((index + 1) * radianPerDivide);
+		float cosNext = std::cos((index + 1) * radianPerDivide);
+
+		float u = float(index) / float(kRingDivide);
+		float uNext = float(index + 1) / float(kRingDivide);
+
+		// positionとuv,normalは必要なら+zを設定する
+		
+		vertices[(index*4)].pos = {-sin * kOuterRadius, cos * kOuterRadius, 0.0f};
+		vertices[(index*4)].normal = {0.0f, 0.0f, -1.0f};
+		vertices[(index*4)].uv = {u, 0.0f};
+
+		vertices[(index*4)+1].pos = {-sinNext * kOuterRadius, cosNext * kOuterRadius, 0.0f};
+		vertices[(index*4)+1].normal = {0.0f, 0.0f, -1.0f};
+		vertices[(index*4)+1].uv = {uNext, 0.0f};
+
+		vertices[(index*4)+2].pos = {-sin * kInnerRadius, cos * kInnerRadius, 0.0f};
+		vertices[(index*4)+2].normal = {0.0f, 0.0f, -1.0f};
+		vertices[(index*4)+2].uv = {u, 1.0f};
+
+		vertices[(index*4)+3].pos = {-sinNext * kInnerRadius, cosNext * kInnerRadius, 0.0f};
+		vertices[(index*4)+3].normal = {0.0f, 0.0f, -1.0f};
+		vertices[(index*4)+3].uv = {uNext, 1.0f};
+
+		indices.push_back((index * 4));
+		indices.push_back((index * 4) + 2);
+		indices.push_back((index * 4) + 1);
+
+		indices.push_back((index * 4) + 2);
+		indices.push_back((index * 4) + 3);
+		indices.push_back((index * 4) + 1);
+	}
+
+	instance->InitializeFromVertices(vertices, indices);
+	return instance;
+}
 
 void Model2::PreDraw(ID3D12GraphicsCommandList* commandList) { ModelCommon2::GetInstance()->PreDraw(commandList); }
 

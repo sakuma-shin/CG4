@@ -143,6 +143,11 @@ public: // 静的メンバ関数
 	static Model2* CreateSquare(uint32_t num);
 
 	/// <summary>
+	// 
+	/// </summary>
+	static Model2* CreateRing(uint32_t divisionNum);
+
+	/// <summary>
 	/// 描画前処理
 	/// </summary>
 	/// <param name="commandList">描画コマンドリスト</param>
