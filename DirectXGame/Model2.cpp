@@ -131,53 +131,53 @@ Model2* Model2::CreateSphere(uint32_t divisionVertial, uint32_t divisionHorizont
 	return instance;
 }
 
-Model2* Model2::CreateSquare() {
-	// メモリ確保
+Model2* Model2::CreateSquare(uint32_t num) {
 	Model2* instance = new Model2;
 	std::vector<Mesh::VertexPosNormalUv> vertices;
 	std::vector<uint32_t> indices;
 
-	// 頂点数
-	const uint32_t kNumVertices = 4;
-	const uint32_t kNumIndices = 6;
+	const float kSideLength = 5.0f;
+	const uint32_t kNumVertices = 4 * num;
+	const uint32_t kNumIndices = 6 * num;
 
 	vertices.resize(kNumVertices);
 	indices.resize(kNumIndices);
 
-	const float kSideLength = 5.0f;
+	float offsetStep = kSideLength * 2.0f;
+	float start = -offsetStep * (num - 1) / 2.0f;
 
-	// 左下
-	vertices[0].pos = {-kSideLength, kSideLength, 0.0f};
-	vertices[0].uv = {0.0f, 1.0f};
-	vertices[0].normal = {0.0f, 0.0f, 1.0f};
+	for (uint32_t n = 0; n < num; ++n) {
+		float offset = start + static_cast<float>(n) * offsetStep;
+		uint32_t vertexIndex = n * 4;
 
-	// 左上
-	vertices[1].pos = {-kSideLength, -kSideLength, 0.0f};
-	vertices[1].uv = {0.0f, 0.0f};
-	vertices[1].normal = {0.0f, 0.0f, 1.0f};
+		vertices[vertexIndex + 0].pos = {-kSideLength + offset, kSideLength, 0.0f};
+		vertices[vertexIndex + 1].pos = {-kSideLength + offset, -kSideLength, 0.0f};
+		vertices[vertexIndex + 2].pos = {kSideLength + offset, kSideLength, 0.0f};
+		vertices[vertexIndex + 3].pos = {kSideLength + offset, -kSideLength, 0.0f};
 
-	// 右下
-	vertices[2].pos = {kSideLength, kSideLength, 0.0f};
-	vertices[2].uv = {1.0f, 1.0f};
-	vertices[2].normal = {0.0f, 0.0f, 1.0f};
+		vertices[vertexIndex + 0].uv = {0.0f, 1.0f};
+		vertices[vertexIndex + 1].uv = {0.0f, 0.0f};
+		vertices[vertexIndex + 2].uv = {1.0f, 1.0f};
+		vertices[vertexIndex + 3].uv = {1.0f, 0.0f};
 
-	// 右上
-	vertices[3].pos = {kSideLength, -kSideLength, 0.0f};
-	vertices[3].uv = {1.0f, 0.0f};
-	vertices[3].normal = {0.0f, 0.0f, 1.0f};
+		for (int j = 0; j < 4; ++j) {
+			vertices[vertexIndex + j].normal = {0.0f, 0.0f, 1.0f};
+		}
 
-	// インデックス
-	indices[0] = 0;
-	indices[1] = 2;
-	indices[2] = 1;
-	indices[3] = 2;
-	indices[4] = 3;
-	indices[5] = 1;
+		uint32_t indexBufferIndex = n * 6;
+		indices[indexBufferIndex + 0] = vertexIndex + 0;
+		indices[indexBufferIndex + 1] = vertexIndex + 2;
+		indices[indexBufferIndex + 2] = vertexIndex + 1;
+		indices[indexBufferIndex + 3] = vertexIndex + 2;
+		indices[indexBufferIndex + 4] = vertexIndex + 3;
+		indices[indexBufferIndex + 5] = vertexIndex + 1;
+	}
 
 	instance->InitializeFromVertices(vertices, indices);
-
 	return instance;
 }
+
+
 
 void Model2::PreDraw(ID3D12GraphicsCommandList* commandList) { ModelCommon2::GetInstance()->PreDraw(commandList); }
 

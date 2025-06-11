@@ -140,7 +140,7 @@ public: // 静的メンバ関数
 	/// <summary>
 	//四角形
 	/// </summary>
-	static Model2* CreateSquare();
+	static Model2* CreateSquare(uint32_t num);
 
 	/// <summary>
 	/// 描画前処理
