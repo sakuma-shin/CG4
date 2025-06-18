@@ -161,7 +161,7 @@ Model2* Model2::CreateSquare(uint32_t num) {
 		vertices[vertexIndex + 3].uv = {1.0f, 0.0f};
 
 		for (int j = 0; j < 4; ++j) {
-			vertices[vertexIndex + j].normal = {0.0f, 0.0f, 1.0f};
+			vertices[vertexIndex + j].normal = {0.0f, 0.0f, -1.0f};
 		}
 
 		uint32_t indexBufferIndex = n * 6;
