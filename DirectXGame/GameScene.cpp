@@ -11,14 +11,21 @@ void GameScene::Initialize() {
 	Model2::StaticInitialize();
 
 	worldTransform_.Initialize();
+	worldTransform_.rotation_ = {0.0f, 0.8f, 0.5f};
 
 	camera_.Initialize();
 
 	model_ = new Model2();
-	model_=Model2::CreateRing(32);
+	model_ = Model2::CreateRing(64, "ring.png");
 }
 
 void GameScene::Update() {
+	worldTransform_.scale_.x *= 1.1f;
+	worldTransform_.scale_.y *= 1.1f;
+	worldTransform_.scale_.z *= 1.1f;
+
+	worldTransform_.UpdateMatrix();
+
 }
 
 void GameScene::Draw() { 

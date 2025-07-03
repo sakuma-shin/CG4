@@ -145,7 +145,7 @@ public: // 静的メンバ関数
 	/// <summary>
 	// 
 	/// </summary>
-	static Model2* CreateRing(uint32_t divisionNum);
+	static Model2* CreateRing(uint32_t divisionNum, const std::string& filename);
 
 	/// <summary>
 	/// 描画前処理

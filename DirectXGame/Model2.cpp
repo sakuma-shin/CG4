@@ -177,13 +177,13 @@ Model2* Model2::CreateSquare(uint32_t num) {
 	return instance;
 }
 
-Model2* Model2::CreateRing(uint32_t divisionNum) {
+Model2* Model2::CreateRing(uint32_t divisionNum, const std::string& filename) {
 	// リングの分割数
 	const uint32_t kRingDivide = divisionNum;
 	// 外の半径
 	const float kOuterRadius = 5.0f;
 	// 内の半径
-	const float kInnerRadius = 1.5f;
+	const float kInnerRadius = 4.8f;
 
 	const float radianPerDivide = 2.0f * std::numbers::pi_v<float> / float(kRingDivide);
 
@@ -234,7 +234,26 @@ Model2* Model2::CreateRing(uint32_t divisionNum) {
 		indices.push_back((index * 4) + 1);
 	}
 
-	instance->InitializeFromVertices(vertices, indices);
+		// メッシュ作成
+	instance->meshes_.emplace_back(std::make_unique<Mesh>());
+	Mesh* mesh = instance->meshes_.back().get();
+	for (const auto& v : vertices)
+		mesh->AddVertex(v);
+	for (auto i : indices)
+		mesh->AddIndex(i);
+
+	// マテリアル作成＆テクスチャ設定
+	auto material = Material::Create();
+	material->name_ = "ringMaterial";
+	material->textureFilename_ = filename;
+	material->LoadTexture(""); // "Resources/" 相対で読み込まれる
+	material->Update();
+
+	// セット
+	mesh->SetMaterial(material.get());
+	instance->defaultMaterial_ = std::move(material);
+
+	mesh->CreateBuffers();
 	return instance;
 }
 
