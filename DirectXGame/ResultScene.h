@@ -1,17 +1,17 @@
 #pragma once
 #include "IScene.h"
-#include"KamataEngine.h"
+#include "KamataEngine.h"
 #include "Model2.h"
 
-class TitleScene : public IScene {
+class ResultScene:public IScene {
 public:
-	void Initialize()override;
+	void Initialize() override;
 
 	void Update() override;
 
 	void Draw() override;
 
-	~TitleScene();
+	~ResultScene();
 
 private:
 	KamataEngine::Camera camera_;

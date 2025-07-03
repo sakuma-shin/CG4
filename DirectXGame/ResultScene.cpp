@@ -1,28 +1,23 @@
-#include "GameScene.h"
+#include "ResultScene.h"
 using namespace KamataEngine;
 
-GameScene::~GameScene() { 
-	Model2::StaticFinalize();
-}
-
-void GameScene::Initialize() {
-	
+void ResultScene::Initialize() {
 	Model2::StaticInitialize();
 
 	worldTransform_.Initialize();
 
 	camera_.Initialize();
 
-	input_ = Input::GetInstance();   
+	input_ = Input::GetInstance();
 }
 
-void GameScene::Update() {
-	if (input_->PushKey(DIK_RETURN)) {
-		sceneNo = RESULT;
+void ResultScene::Update() {
+	if (input_->TriggerKey(DIK_RETURN)) {
+		sceneNo = TITLE;
 	}
 }
 
-void GameScene::Draw() { 
+void ResultScene::Draw() {
 	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
 
 	Sprite::PreDraw(dxCommon->GetCommandList());
@@ -39,3 +34,7 @@ void GameScene::Draw() {
 
 	Sprite::PostDraw();
 }
+
+ResultScene::~ResultScene() { Model2::StaticFinalize(); }
+
+
