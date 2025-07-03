@@ -1,5 +1,6 @@
 #include "GameScene.h"
 #include "kamataEngine.h"
+#include"GameManager.h"
 #include <Windows.h>
 
 using namespace KamataEngine;
@@ -8,37 +9,42 @@ using namespace KamataEngine;
 int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	KamataEngine::Initialize(L"LE3C_10_サクマ_シン");
 
-	GameScene* gameScene = new GameScene();
+	GameManager* gameManager = new GameManager();
 
-	gameScene->Initialize();
+	gameManager->Run();
 
-	// DirectXCommonインスタンスの取得
-	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
+	//GameScene* gameScene = new GameScene();
 
-	// DirectXCommonクラスが管理している、ウインドウの幅と高さの取得
-	int32_t w = dxCommon->GetBackBufferWidth();
-	int32_t h = dxCommon->GetBackBufferHeight();
-	DebugText::GetInstance()->ConsolePrintf(std::format("width:{},height: {}\n", w, h).c_str());
+	//gameScene->Initialize();
 
-	// メインループ
-	while (true) {
-		// エンジンの更新
-		if (KamataEngine::Update()) {
-			break;
-		}
+	//// DirectXCommonインスタンスの取得
+	//DirectXCommon* dxCommon = DirectXCommon::GetInstance();
 
-		gameScene->Update();
+	//// DirectXCommonクラスが管理している、ウインドウの幅と高さの取得
+	//int32_t w = dxCommon->GetBackBufferWidth();
+	//int32_t h = dxCommon->GetBackBufferHeight();
+	//DebugText::GetInstance()->ConsolePrintf(std::format("width:{},height: {}\n", w, h).c_str());
 
-		// 描画開始
-		dxCommon->PreDraw();
+	//// メインループ
+	//while (true) {
+	//	// エンジンの更新
+	//	if (KamataEngine::Update()) {
+	//		break;
+	//	}
 
-		gameScene->Draw();
+	//	gameScene->Update();
 
-		// 描画終了
-		dxCommon->PostDraw();
-	}
-	delete gameScene;
+	//	// 描画開始
+	//	dxCommon->PreDraw();
 
+	//	gameScene->Draw();
+
+	//	// 描画終了
+	//	dxCommon->PostDraw();
+	//}
+	/*delete gameScene;*/
+
+	delete gameManager;
 	// エンジンの終了処理
 	KamataEngine::Finalize();
 	return 0;

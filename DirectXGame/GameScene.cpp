@@ -3,7 +3,6 @@ using namespace KamataEngine;
 
 GameScene::~GameScene() { 
 	Model2::StaticFinalize();
-	delete model_; 
 }
 
 void GameScene::Initialize() {
@@ -13,10 +12,14 @@ void GameScene::Initialize() {
 	worldTransform_.Initialize();
 
 	camera_.Initialize();
+
+	input_ = Input::GetInstance();   
 }
 
 void GameScene::Update() {
-
+	if (input_->TriggerKey(DIK_RETURN)) {
+		sceneNo = TITLE;
+	}
 }
 
 void GameScene::Draw() { 
