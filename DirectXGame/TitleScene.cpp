@@ -22,7 +22,6 @@ void TitleScene::Draw() {
 
 	Sprite::PreDraw(dxCommon->GetCommandList());
 
-	sprite_->Draw();
 
 	Sprite::PostDraw();
 
@@ -39,5 +38,4 @@ void TitleScene::Draw() {
 
 TitleScene::~TitleScene() {
 	Model2::StaticFinalize(); 
-	delete sprite_;
 }

@@ -17,6 +17,6 @@ private:
 	KamataEngine::Camera camera_;
 	KamataEngine::WorldTransform worldTransform_;
 
-	uint32_t textureHandle_ = 0u;
+	KamataEngine::Input* input_;
 
 };
