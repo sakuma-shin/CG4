@@ -9,10 +9,6 @@ void TitleScene::Initialize() {
 	camera_.Initialize();
 
 	input_=Input::GetInstance();
-	textureHandle_ = TextureManager::Load("white1x1.png");
-
-	sprite_=Sprite::Create(textureHandle_, {0, 0});
-	sprite_->SetSize({1280.0f, 720.0f});
 }
 
 void TitleScene::Update() {
