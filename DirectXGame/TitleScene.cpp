@@ -9,11 +9,14 @@ void TitleScene::Initialize() {
 	camera_.Initialize();
 
 	input_=Input::GetInstance();
+	textureHandle_ = TextureManager::Load("white1x1.png");
 
+	sprite_=Sprite::Create(textureHandle_, {0, 0});
+	sprite_->SetSize({1280.0f, 720.0f});
 }
 
 void TitleScene::Update() {
-	if (input_->PushKey(DIK_RETURN)) {
+	if (input_->TriggerKey(DIK_RETURN)) {
 		sceneNo = STAGE;
 	}
 }
@@ -22,6 +25,8 @@ void TitleScene::Draw() {
 	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
 
 	Sprite::PreDraw(dxCommon->GetCommandList());
+
+	sprite_->Draw();
 
 	Sprite::PostDraw();
 
@@ -38,4 +43,5 @@ void TitleScene::Draw() {
 
 TitleScene::~TitleScene() {
 	Model2::StaticFinalize(); 
+	delete sprite_;
 }

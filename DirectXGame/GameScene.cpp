@@ -17,7 +17,7 @@ void GameScene::Initialize() {
 }
 
 void GameScene::Update() {
-	if (input_->PushKey(DIK_RETURN)) {
+	if (input_->TriggerKey(DIK_RETURN)) {
 		sceneNo = RESULT;
 	}
 }

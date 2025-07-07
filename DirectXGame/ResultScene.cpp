@@ -5,7 +5,7 @@ void ResultScene::Initialize() {
 	Model2::StaticInitialize();
 
 	worldTransform_.Initialize();
-
+	
 	camera_.Initialize();
 
 	input_ = Input::GetInstance();

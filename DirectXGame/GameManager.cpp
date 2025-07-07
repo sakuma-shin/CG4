@@ -35,7 +35,6 @@ int GameManager::Run() {
 			break;
 		}
 
-		input_->Update();
 
 		//シーンのチェック
 		prevSceneNo_ = currentSceneNo_;

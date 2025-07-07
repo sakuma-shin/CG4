@@ -17,5 +17,8 @@ private:
 	KamataEngine::Camera camera_;
 	KamataEngine::WorldTransform worldTransform_;
 
+	uint32_t textureHandle_ = 0u;
+	KamataEngine::Sprite* sprite_ = nullptr;
+
 	KamataEngine::Input* input_ = nullptr;
 };
