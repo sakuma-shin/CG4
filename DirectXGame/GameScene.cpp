@@ -8,6 +8,8 @@ GameScene::~GameScene() {
 	}
 	delete playerModel_;
 	delete player_;
+	delete hpGreenSprite_;
+	delete hpRedSprite_;
 }
 
 void GameScene::Initialize() {
