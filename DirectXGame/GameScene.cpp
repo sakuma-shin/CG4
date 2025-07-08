@@ -8,7 +8,6 @@ GameScene::~GameScene() {
 	}
 	delete playerModel_;
 	delete player_;
-	
 }
 
 void GameScene::Initialize() {
@@ -20,10 +19,12 @@ void GameScene::Initialize() {
 	camera_.Initialize();
 
 	input_ = Input::GetInstance();
-	bgGH = TextureManager::Load("Background.png");
-	playerModel_ = Model2::CreateFromOBJ("player");
-	for (int i = 0; i < 2; i++) {
 
+	bgGH = TextureManager::Load("Background.png");
+
+	playerModel_ = Model2::CreateFromOBJ("player");
+
+	for (int i = 0; i < 2; i++) {
 		Vector2 bgPos = {static_cast<float>(WinApp::kWindowWidth * i), 0.0f};
 		bgPos_.push_back(bgPos);
 		Sprite* sprite = Sprite::Create(bgGH, bgPos_[i]);
@@ -32,6 +33,17 @@ void GameScene::Initialize() {
 
 	player_ = new Player();
 	player_->Initialize(playerModel_);
+
+	hpGH = TextureManager::Load("white1x1.png");
+
+	float spritePos = 490.0f;
+	hpGreenSprite_ = Sprite::Create(hpGH, {spritePos, 60.0f});
+	hpGreenSprite_->SetSize({player_->GetHp(), 60.0f});
+	hpGreenSprite_->SetColor({0.0f, 1.0f, 0.0f, 0.9f});
+
+	hpRedSprite_ = Sprite::Create(hpGH, {spritePos + Player::kMaxHp, 60.0f});
+	hpRedSprite_->SetSize({0.0f, 60.0f});
+	hpRedSprite_->SetColor({1.0f, 0.0f, 0.0f, 0.9f});
 }
 
 void GameScene::Update() {
@@ -50,6 +62,13 @@ void GameScene::Update() {
 		}
 		bgSprite_[i]->SetPosition(bgPos_[i]);
 	}
+
+	float playerHp = player_->GetHp();
+
+	hpGreenSprite_->SetSize({playerHp, 60.0f});
+
+	hpRedSprite_->SetSize({Player::kMaxHp - playerHp, 60.0f});
+	hpRedSprite_->SetPosition({490.0f + playerHp, 60.0f});
 }
 
 void GameScene::Draw() {
@@ -71,6 +90,9 @@ void GameScene::Draw() {
 	Model2::PostDraw();
 
 	Sprite::PreDraw(dxCommon->GetCommandList());
+
+	hpGreenSprite_->Draw();
+	hpRedSprite_->Draw();
 
 	Sprite::PostDraw();
 }

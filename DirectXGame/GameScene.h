@@ -25,5 +25,9 @@ private:
 	std::vector<KamataEngine::Sprite*> bgSprite_;
 	std::vector<KamataEngine::Vector2> bgPos_;
 
+	uint32_t hpGH = 0u;
+	KamataEngine::Sprite* hpGreenSprite_ = nullptr;
+	KamataEngine::Sprite* hpRedSprite_ = nullptr;
+
 	KamataEngine::Model2* playerModel_ = nullptr;
 };
