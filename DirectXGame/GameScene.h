@@ -3,6 +3,7 @@
 #include"Model2.h"
 #include "IScene.h"
 #include<vector>
+#include"Player.h"
 
 class GameScene:public IScene{
 public:
@@ -18,7 +19,11 @@ private:
 
 	KamataEngine::Input* input_ = nullptr;
 
+	Player* player_ = nullptr;
+
 	uint32_t bgGH = 0u;
 	std::vector<KamataEngine::Sprite*> bgSprite_;
 	std::vector<KamataEngine::Vector2> bgPos_;
+
+	KamataEngine::Model2* playerModel_ = nullptr;
 };

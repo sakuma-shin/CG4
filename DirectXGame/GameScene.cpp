@@ -6,6 +6,8 @@ GameScene::~GameScene() {
 	for (Sprite* sprite : bgSprite_) {
 		delete sprite;
 	}
+	delete playerModel_;
+	delete player_;
 	
 }
 
@@ -19,6 +21,7 @@ void GameScene::Initialize() {
 
 	input_ = Input::GetInstance();
 	bgGH = TextureManager::Load("Background.png");
+	playerModel_ = Model2::CreateFromOBJ("player");
 	for (int i = 0; i < 2; i++) {
 
 		Vector2 bgPos = {static_cast<float>(WinApp::kWindowWidth * i), 0.0f};
@@ -26,6 +29,9 @@ void GameScene::Initialize() {
 		Sprite* sprite = Sprite::Create(bgGH, bgPos_[i]);
 		bgSprite_.push_back(sprite);
 	}
+
+	player_ = new Player();
+	player_->Initialize(playerModel_);
 }
 
 void GameScene::Update() {
@@ -34,6 +40,8 @@ void GameScene::Update() {
 		bgPos_.clear();
 		sceneNo = RESULT;
 	}
+
+	player_->Update();
 
 	for (int i = 0; i < 2; i++) {
 		bgPos_[i].x--;
@@ -57,6 +65,8 @@ void GameScene::Draw() {
 	dxCommon->ClearDepthBuffer();
 
 	Model2::PreDraw(dxCommon->GetCommandList());
+
+	player_->Draw(camera_);
 
 	Model2::PostDraw();
 
