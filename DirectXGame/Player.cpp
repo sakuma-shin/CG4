@@ -1,5 +1,6 @@
 #include "Player.h"
 #include <cassert>
+
 using namespace KamataEngine;
 
 void Player::Initialize(KamataEngine::Model2* model) {
@@ -47,3 +48,5 @@ void Player::Update() {
 }
 
 void Player::Draw(KamataEngine::Camera& camera) { model_->Draw(worldTransform_, camera); }
+
+Player::~Player() { }

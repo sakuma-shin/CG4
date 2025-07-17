@@ -14,6 +14,8 @@ public:
 
 	float GetHp() const { return hp_; }
 
+	~Player();
+
 private:
 
 	KamataEngine::Input *input_ = nullptr;

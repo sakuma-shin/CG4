@@ -30,4 +30,11 @@ private:
 	KamataEngine::Sprite* hpRedSprite_ = nullptr;
 
 	KamataEngine::Model2* playerModel_ = nullptr;
+
+	uint32_t numGH = 0u;
+	KamataEngine::Sprite* numSprite_[5] = {};
+	KamataEngine::Vector2 numSize = {32.0f, 64.0f};
+
+	int32_t number = 0;
+
 };

@@ -10,6 +10,9 @@ GameScene::~GameScene() {
 	delete player_;
 	delete hpGreenSprite_;
 	delete hpRedSprite_;
+	for (int i = 0; i < 5; i++) {
+		delete numSprite_[i];
+	}
 }
 
 void GameScene::Initialize() {
@@ -26,11 +29,13 @@ void GameScene::Initialize() {
 
 	playerModel_ = Model2::CreateFromOBJ("player");
 
-	for (int i = 0; i < 2; i++) {
-		Vector2 bgPos = {static_cast<float>(WinApp::kWindowWidth * i), 0.0f};
-		bgPos_.push_back(bgPos);
-		Sprite* sprite = Sprite::Create(bgGH, bgPos_[i]);
-		bgSprite_.push_back(sprite);
+	if (bgSprite_.size() < 2) {
+		for (int i = 0; i < 2; i++) {
+			Vector2 bgPos = {static_cast<float>(WinApp::kWindowWidth * i), 0.0f};
+			bgPos_.push_back(bgPos);
+			Sprite* sprite = Sprite::Create(bgGH, bgPos_[i]);
+			bgSprite_.push_back(sprite);
+		}
 	}
 
 	player_ = new Player();
@@ -46,12 +51,20 @@ void GameScene::Initialize() {
 	hpRedSprite_ = Sprite::Create(hpGH, {spritePos + Player::kMaxHp, 60.0f});
 	hpRedSprite_->SetSize({0.0f, 60.0f});
 	hpRedSprite_->SetColor({1.0f, 0.0f, 0.0f, 0.9f});
+
+	numGH = TextureManager::Load("number.png");
+
+	for (int i = 0; i < 5; i++) {
+		numSprite_[i] = Sprite::Create(numGH, {100.0f + numSize.x * i, 5});
+		numSprite_[i]->SetSize(numSize);
+	}
+	number = 0;
 }
 
 void GameScene::Update() {
+
 	if (input_->TriggerKey(DIK_RETURN)) {
-		bgSprite_.clear();
-		bgPos_.clear();
+
 		sceneNo = RESULT;
 	}
 
@@ -71,6 +84,25 @@ void GameScene::Update() {
 
 	hpRedSprite_->SetSize({Player::kMaxHp - playerHp, 60.0f});
 	hpRedSprite_->SetPosition({490.0f + playerHp, 60.0f});
+
+	for (int i = 0; i < 5; i++) {
+		numSprite_[i]->SetTextureRect({0, 0}, numSize);
+	}
+
+	number = int(playerHp);
+
+	int32_t digit = 10000;
+	// 五桁分ループ
+	for (int i = 0; i < 5; i++) {
+		// 今の桁の数値を散りだす
+		int nowNumber = number / digit;
+		// 今の数値の部分を切り出すようにする
+		numSprite_[i]->SetTextureRect({numSize.x * nowNumber, 0}, numSize);
+		//次の処理のために残りの桁数の値にする
+		number %= digit;
+		//次の桁の処理のために割る数値を10で割って桁に応じた値にする
+		digit /= 10;
+	}
 }
 
 void GameScene::Draw() {
@@ -79,6 +111,10 @@ void GameScene::Draw() {
 	Sprite::PreDraw(dxCommon->GetCommandList());
 	for (Sprite* sprite : bgSprite_) {
 		sprite->Draw();
+	}
+
+	for (int i = 0; i < 5; i++) {
+		numSprite_[i]->Draw();
 	}
 
 	Sprite::PostDraw();
